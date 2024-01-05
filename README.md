@@ -8,6 +8,6 @@ The current best classification accuracy achieved is 91 percent using the deep l
 
 
 Original Project idea from SCorina (contributor).  
-
+![image](https://github.com/am0032/Keyword-Classifier/assets/123314532/7aba227c-8815-49a7-8b90-161ab918c5bc)
 
 
