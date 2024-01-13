@@ -5,8 +5,7 @@ The goal is to reduce work time considerably  on classifying keywords into diffe
   
 Original Project idea from SCorina (contributor).   
   
-The current best classification accuracy achieved is 91 percent using the deep learning model.  
-Currently working on making the program work better on unseen generalized data.
+The current best classification accuracy achieved is 91 percent using the deep learning model. The training code has not been uploaded yet. Currently working on making the program work better on unseen generalized data.  
 
 
 
