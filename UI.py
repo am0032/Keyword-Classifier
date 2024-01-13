@@ -113,11 +113,11 @@ set_file_path_button.config(bg="#2E778C", fg="black", font=font.Font(family="Lat
 
 
 
-# TIME SERIES AND RECURRENCE PLOTS START
+
 
 def generate_graphs():
 
-    # rho varied, sigma and beta constant
+ 
     if case == 1:
         status_label.config(text="Status: running")  # Update the status label when the task is complete
         
@@ -140,23 +140,24 @@ def generate_graphs():
         data = pd.read_excel(file_path)
         X = data.iloc[:, 0].values
 
-        # Load trained model and tokenizer from the 'sub' folder within user_file_path
-        subfolder_name = 'sub'
-        model_folder_path = os.path.join(user_file_path, subfolder_name)
+        # Convert X to lowercase (if needed)
+        X = [str(text).lower() for text in X]
 
-        # Load trained model from the 'sub' folder
-        model_path = os.path.join(model_folder_path, 'trained_model.h5')
-        model = load_model(model_path)
+        # Select the initial training data folder using tkinter file dialog
+        initial_training_data_folder = filedialog.askdirectory(title="Select model and tokenizer folder")
 
-        # Load Tokenizer from the 'sub' folder
-        tokenizer_path = os.path.join(model_folder_path, 'tokenizer.pkl')
+        # Load trained model from the initial training data folder
+        model = load_model(os.path.join(initial_training_data_folder, 'trained_model.h5'))
+
+        # Load Tokenizer from the initial training data folder
+        tokenizer_path = os.path.join(initial_training_data_folder, 'tokenizer.pkl')
         with open(tokenizer_path, 'rb') as tokenizer_file:
             tokenizer = pickle.load(tokenizer_file)
 
-        # Preprocess the data
+        # Preprocess the data using the same input_length as in training
         X = tokenizer.texts_to_sequences(X)
         input_length = max(len(sequence) for sequence in X)
-        X = pad_sequences(X, maxlen=input_length)
+        X = pad_sequences(X, maxlen=12)
 
         # Make predictions
         predictions = model.predict(X)
@@ -168,7 +169,7 @@ def generate_graphs():
         data['Predicted Classes'] = predicted_classes
 
         # Save the dataframe back to the Excel file
-        data.to_excel(file_path, index=False)
+        data.to_excel(file_path, index=False, header=False)  
 
         print("Files have been classified")
         status_label.config(text="Status: Completed")
@@ -179,7 +180,7 @@ def generate_graphs():
         
    
            
-    #3 Cases of keeping one parameter varying and changing the two other for rossler system
+
     if case == 4:
         status_label.config(text="Status: running")  # Update the status label when the task is complete
         
